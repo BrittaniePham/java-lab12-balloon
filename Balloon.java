@@ -38,6 +38,31 @@ public class Balloon {
 
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (isHelium ? 1231 : 1237);
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Balloon other = (Balloon) obj;
+		if (isHelium != other.isHelium)
+			return false;
+		if (size != other.size)
+			return false;
+		return true;
+	}
+
 	public Size getSize() {
 		return size;
 	}

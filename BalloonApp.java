@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class BalloonApp extends JFrame {
@@ -49,15 +50,15 @@ public class BalloonApp extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblLabBalloon = new JLabel("Lab Balloon");
+		lblLabBalloon.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+		lblLabBalloon.setBorder(new EmptyBorder(5, 0, 5, 0));
+		lblLabBalloon.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLabBalloon.setHorizontalTextPosition(SwingConstants.CENTER);
 		contentPane.add(lblLabBalloon, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		
-		JLabel lblCompare = new JLabel("compare");
-		panel.add(lblCompare);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -83,14 +84,44 @@ public class BalloonApp extends JFrame {
 		lblBalloon2.setOpaque(true);
 		panel_1.add(lblBalloon2);
 		
+		JLabel lblCompare = new JLabel("compare");
+		panel.add(lblCompare);
+		
 		JButton btnGenerateBalloons = new JButton("Generate Balloons");
 		btnGenerateBalloons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Balloon b1 = new Balloon(false, Size.XS);
-				Balloon b2 = new Balloon(false, Size.XS);
+				Random rand = new Random();
+				
+				String match;
+				
+				boolean helium1 = rand.nextBoolean();
+				boolean helium2 = rand.nextBoolean();
+				
+				int s1 = rand.nextInt(5);
+				int s2 = rand.nextInt(5);
+
+				Balloon b1 = new Balloon(helium1, Size.values()[s1]);
+				Balloon b2 = new Balloon(helium2, Size.values()[s2]);
+				
+				lblBalloon1.setIcon(b1.getIcon());
+				lblBalloon2.setIcon(b2.getIcon());
+				
+				lblBalloon1.setText(b1.toString());
+				lblBalloon2.setText(b2.toString());
+				
+				if(b1.equals(b2)) {
+					match = "equal";
+				} else {
+					match = "not equal";
+				}
+				
+				lblCompare.setText(match);
+
 			}
 		});
 		panel.add(btnGenerateBalloons);
+		
+		
 	}
 
 }
